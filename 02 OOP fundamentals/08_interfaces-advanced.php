@@ -48,6 +48,11 @@ class Bird implements CanFly
     {
         return "I am flying";
     }
+
+    public function chirp()
+    {
+        return "Chirp chirp";
+    }
 }
 
 class Duck extends Bird implements CanFly, CanSwim
@@ -55,6 +60,10 @@ class Duck extends Bird implements CanFly, CanSwim
     public function swim()
     {
         return "Splash! I'm swimming";
+    }
+    public function chirp()
+    {
+        return "Quack quack";
     }
 }
 
@@ -117,8 +126,7 @@ class Person implements CanGreet, CanIntroduce
 
     public function introduce()
     {
-        return "Hello, my name is $this->name, I am $this->age years old and
-         I am currently working as a(n) $this->occupation";
+        return "Hello, my name is $this->name, I am $this->age years old and I am currently working as a(n) $this->occupation";
     }
 
 }
