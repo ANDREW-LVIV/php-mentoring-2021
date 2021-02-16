@@ -9,6 +9,9 @@ abstract class Person
 
     public function __construct($name, $age, $gender)
     {
+        $this->name = $name;
+        $this->age = $age;
+        $this->gender = $gender;
     }
 
     abstract public function introduce();
@@ -43,7 +46,7 @@ final class Child extends Person
 
     public function say_dreams()
     {
-        return "I would like to be a(n) $this->aspirations when I grow up.";
+        return "I would like to be a(n) " . say_list($this->aspirations) . " when I grow up.";
     }
 }
 
