@@ -13,7 +13,7 @@ class Person
             throw new InvalidArgumentException("Name must be a string!");
         }
 
-        if ($age < 0) {
+        if (!is_integer($age) || $age < 0) {
             throw new InvalidArgumentException("Age must be a non-negative integer!");
         }
 
@@ -52,7 +52,7 @@ class Person
 
     public function set_age($age)
     {
-        if ($age < 0) {
+        if (!is_integer($age) || $age < 0) {
             throw new InvalidArgumentException("Age must be a non-negative integer!");
         }
         $this->age = $age;
