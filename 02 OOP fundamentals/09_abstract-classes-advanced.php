@@ -61,7 +61,7 @@ class ComputerProgrammer extends Person
 
     public function greet($name)
     {
-        return "Hello $name, I'm $this->name, nice to meet you";
+        return parent::greet($name) . ", I'm $this->name, nice to meet you";
     }
 
     public function advertise()
