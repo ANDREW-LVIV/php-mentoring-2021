@@ -4,12 +4,30 @@
 # https://www.codewars.com/kata/object-oriented-php-number-10-objects-on-the-fly-advanced
 
 $object_oriented_php = new class() {
+    public $author;
 
-    public $description = "An amazing PHP Kata Series, complete with 10 top-quality Kata containing a large number 
-    of both fixed and random tests, that teaches both the fundamentals of object-oriented programming 
-     in PHP (in the first 7 Kata of this Series) and more advanced OOP topics in PHP 
-     (in the last 3 Kata of this Series) such as interfaces, abstract classes and even 
-     anonymous classes in a way that stimulates critical thinking and encourages independent research";
+    public function __construct()
+    {
+        $this->author = new class("Donald", 17, "Male", "Computer Programmer") {
+            public $gender;
+
+            public function __construct($name, $age, $gender, $occupation)
+            {
+                $this->name = $name;
+                $this->age = $age;
+                $this->gender = $gender;
+                $this->occupation = $occupation;
+
+            }
+
+            public function __toString()
+            {
+                return "$this->name, aged $this->age, who is a " . strtolower($this->occupation) . " proficient in Javascript and PHP and is a PHP enthusiast";
+            }
+        };
+    }
+
+    public $description = "An amazing PHP Kata Series, complete with 10 top-quality Kata containing a large number of both fixed and random tests, that teaches both the fundamentals of object-oriented programming in PHP (in the first 7 Kata of this Series) and more advanced OOP topics in PHP (in the last 3 Kata of this Series) such as interfaces, abstract classes and even anonymous classes in a way that stimulates critical thinking and encourages independent research";
     public $kata_list = [
         'Object-Oriented PHP #1 - Classes, Public Properties and Methods',
         'Object-Oriented PHP #2 - Class Constructors and $this',
@@ -24,7 +42,6 @@ $object_oriented_php = new class() {
     ];
     public $kata_count = 10;
 
-//    public $author = "Donald, aged 17, who is a computer programmer proficient in Javascript and PHP and is a PHP enthusiast";
 
     public function advertise($name)
     {
@@ -33,10 +50,10 @@ $object_oriented_php = new class() {
 
     public function get_kata_by_number($kata_number)
     {
-        if ($kata_number > 0 && $kata_number <= 10) {
-            throw new InvalidArgumentException("Age must be a non-negative integer!");
+        if (!is_integer($kata_number) || $kata_number < 1 || $kata_number > 10) {
+            throw new InvalidArgumentException("Is not an integer in the range of 1 to 10!");
         }
-        return $this->kata_list[$kata_number + 1];
+        return $this->kata_list[$kata_number - 1];
     }
 
     public function complete()
