@@ -9,22 +9,10 @@ class Person
 
     public function __construct($name, $age, $occupation)
     {
-        if (!is_string($name)) {
-            throw new InvalidArgumentException("Name must be a string!");
-        }
-
-        if (!is_integer($age) || $age < 0) {
-            throw new InvalidArgumentException("Age must be a non-negative integer!");
-        }
-
-        if (!is_string($occupation)) {
-            throw new InvalidArgumentException("Occupation must be a string!");
-        }
-        $this->name = $name;
-        $this->age = $age;
-        $this->occupation = $occupation;
+        $this->set_name($name);
+        $this->set_age($age);
+        $this->set_occupation($occupation);
     }
-
 
     public function get_name()
     {
