@@ -42,7 +42,6 @@ $object_oriented_php = new class() {
     ];
     public $kata_count = 10;
 
-
     public function advertise($name)
     {
         return "Hey $name, don't forget to check out this great PHP Kata Series authored by Donald called \"Object-Oriented PHP\"";
