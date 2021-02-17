@@ -26,6 +26,8 @@ $object_oriented_php = new class() {
         };
     }
 
+    public $description = "An amazing PHP Kata Series, complete with 10 top-quality Kata containing a large number of both fixed and random tests, that teaches both the fundamentals of object-oriented programming in PHP (in the first 7 Kata of this Series) and more advanced OOP topics in PHP (in the last 3 Kata of this Series) such as interfaces, abstract classes and even anonymous classes in a way that stimulates critical thinking and encourages independent research";
+
     public $kata_list = [
         'Object-Oriented PHP #1 - Classes, Public Properties and Methods',
         'Object-Oriented PHP #2 - Class Constructors and $this',
@@ -38,6 +40,7 @@ $object_oriented_php = new class() {
         'Object-Oriented PHP #9 - Abstract Classes [Advanced]',
         'Object-Oriented PHP #10 - Objects on the Fly [Advanced]',
     ];
+
     public $kata_count = 10;
 
     public function advertise($name)
@@ -57,8 +60,6 @@ $object_oriented_php = new class() {
     {
         return "Hooray, I've finally completed the entire \"Object-Oriented PHP\" Kata Series!!!";
     }
-
-    public $description = "An amazing PHP Kata Series, complete with 10 top-quality Kata containing a large number of both fixed and random tests, that teaches both the fundamentals of object-oriented programming in PHP (in the first 7 Kata of this Series) and more advanced OOP topics in PHP (in the last 3 Kata of this Series) such as interfaces, abstract classes and even anonymous classes in a way that stimulates critical thinking and encourages independent research";
 
     public function __toString()
     {
