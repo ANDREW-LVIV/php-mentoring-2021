@@ -180,7 +180,7 @@ function reversedText($text) {
 // The reversed text but the character order in words kept intact
 function mirrorMultibyteString(string $text) {
   $array = preg_split('//u', $text, -1, PREG_SPLIT_NO_EMPTY);
-  $array2 = implode('', array_reverse($array));
+  $array2 = implode('', $array);
   $array3 = explode(' ', $array2);
 
   return implode(' ', array_reverse($array3));
