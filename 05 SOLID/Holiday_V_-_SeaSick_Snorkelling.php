@@ -22,8 +22,8 @@ function sea_sick(string $s): string {
     return $change / $count * 100 <= 20 ? 'No Problem' : 'Throw Up';
 }
 
-echo sea_sick("~____~") . "\r\n";
-echo sea_sick("~______________________~") . "\r\n";
-echo sea_sick("_") . "\r\n";
-echo sea_sick("_~~~~~~~_~__~______~~__~~_~~") . "\r\n";
-echo sea_sick("______~___~_") . "\r\n";
+echo sea_sick("~____~") . "\r\n"; // Throw Up
+echo sea_sick("~______________________~") . "\r\n"; // No Problem
+echo sea_sick("_") . "\r\n"; // No Problem
+echo sea_sick("_~~~~~~~_~__~______~~__~~_~~") . "\r\n"; // Throw Up
+echo sea_sick("______~___~_") . "\r\n"; // Throw Up
