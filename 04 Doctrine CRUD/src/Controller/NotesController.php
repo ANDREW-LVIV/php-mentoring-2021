@@ -2,7 +2,7 @@
 
 namespace App\Controller;
 
-use App\Entity\Guestbook;
+use App\Entity\Notes;
 use DateTime;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
@@ -10,7 +10,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 
-class GuestBookController extends AbstractController
+class NotesController extends AbstractController
 {
 
     /**
@@ -34,7 +34,7 @@ class GuestBookController extends AbstractController
             $previous_page = $page - 1;
         }
 
-        $repository = $this->getDoctrine()->getRepository(Guestbook::class);
+        $repository = $this->getDoctrine()->getRepository(Notes::class);
         $records = $repository->findBy(
           [],
           ['id' => $order],
@@ -63,6 +63,8 @@ class GuestBookController extends AbstractController
      * @Route("/search", name="search_page")
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     *
      * @return Response
      */
     public function search(
@@ -70,7 +72,7 @@ class GuestBookController extends AbstractController
       EntityManagerInterface $entityManager
     ): Response {
         $word = $request->get('word');
-        $repository = $this->getDoctrine()->getRepository(Guestbook::class);
+        $repository = $this->getDoctrine()->getRepository(Notes::class);
         $records = $repository->findByMsgField($word);
         return $this->render(
           'search.html.twig',
@@ -100,8 +102,11 @@ class GuestBookController extends AbstractController
       Request $request,
       EntityManagerInterface $entityManager
     ) {
-        $record = new Guestbook();
-        $record->setNick($request->get('nick'))
+        if(empty($request->get('title')) OR empty($request->get('msg'))) {
+            return $this->redirectToRoute('main');
+        }
+        $record = new Notes();
+        $record->setTitle($request->get('title'))
           ->setMsg($request->get('msg'))
           ->setTimestamp(new DateTime("now"));
         $entityManager->persist($record);
@@ -117,7 +122,7 @@ class GuestBookController extends AbstractController
     public function edit(int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $record = $entityManager->getRepository(Guestbook::class)->find($id);
+        $record = $entityManager->getRepository(Notes::class)->find($id);
 
         return $this->render(
           'edit.html.twig',
@@ -141,14 +146,14 @@ class GuestBookController extends AbstractController
       EntityManagerInterface $entityManager
     ) {
         $entityManager = $this->getDoctrine()->getManager();
-        $record = $entityManager->getRepository(Guestbook::class)->find($id);
+        $record = $entityManager->getRepository(Notes::class)->find($id);
         if (!$record) {
             throw $this->createNotFoundException(
               'No record found for id ' . $id
             );
         }
 
-        $record->setNick($request->get('nick'))
+        $record->setTitle($request->get('title'))
           ->setMsg($request->get('msg'));
         $entityManager->flush();
 
@@ -164,7 +169,7 @@ class GuestBookController extends AbstractController
     public function delete(int $id)
     {
         $entityManager = $this->getDoctrine()->getManager();
-        $record = $entityManager->getRepository(Guestbook::class)->find($id);
+        $record = $entityManager->getRepository(Notes::class)->find($id);
         $entityManager->remove($record);
         $entityManager->flush();
 

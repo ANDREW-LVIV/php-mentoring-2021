@@ -2,14 +2,14 @@
 
 namespace App\Entity;
 
-use App\Repository\GuestbookRepository;
+use App\Repository\NotesRepository;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity(repositoryClass=GuestbookRepository::class)
- * @ORM\Table(name="gb_records")
+ * @ORM\Entity(repositoryClass=NotesRepository::class)
+ * @ORM\Table(name="notes_records")
  */
-class Guestbook
+class Notes
 {
     /**
      * @ORM\Id
@@ -21,7 +21,7 @@ class Guestbook
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private $nick;
+    private $title;
 
     /**
      * @ORM\Column(type="text")
@@ -38,14 +38,14 @@ class Guestbook
         return $this->id;
     }
 
-    public function getNick(): ?string
+    public function getTitle(): ?string
     {
-        return $this->nick;
+        return $this->title;
     }
 
-    public function setNick(string $nick): self
+    public function setTitle(string $title): self
     {
-        $this->nick = $nick;
+        $this->title = $title;
 
         return $this;
     }

@@ -1,6 +1,6 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Home{% endblock title %}
+{% block title %}Edit{% endblock title %}
 
 {% block body %}
     <div class="bg-light text-dark border-10 border-info rounded p-3">
@@ -9,8 +9,8 @@
                 <div class="row justify-content-center py-2">
                     <form class="form col-10 col-sm-8 col-md-6 col-lg-4 align-self-center" action="/update/{{ record.id }}" method="POST">
                         <div class="form__group form-group">
-                            <input name="nick" type="text" placeholder="your nickname" class="form-control mb-1" autocomplete="off" value="{{ record.nick }}">
-                            <textarea name="msg" cols="30" rows="2" placeholder="enter a message" class="form-control mt-1">{{ record.msg }}</textarea>
+                            <input name="title" type="text" placeholder="Title" class="form-control mb-1" autocomplete="off" value="{{ record.title }}">
+                            <textarea name="msg" cols="30" rows="2" placeholder="Message" class="form-control mt-1">{{ record.msg }}</textarea>
                         </div>
                         <button type="submit" class="btn btn-info form-control">Submit</button>
                     </form>
