@@ -22,7 +22,7 @@ class NotesController extends AbstractController
      */
     public function index(Request $request, $page = 1)
     {
-        $order = $request->get('order') ?? 'ASC';
+        $order = $request->get('order') ?? 'DESC';
 
         $previous_page = false;
         $next_page = false;
@@ -37,7 +37,7 @@ class NotesController extends AbstractController
         $repository = $this->getDoctrine()->getRepository(Notes::class);
         $records = $repository->findBy(
           [],
-          ['id' => $order],
+          ['title' => $order],
           $limit + 1,
           $offset
         );
@@ -63,7 +63,7 @@ class NotesController extends AbstractController
      * @Route("/search", name="search_page")
      * @param \Symfony\Component\HttpFoundation\Request $request
      *
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     * @param \Doctrine\ORM\EntityManagerInterface
      *
      * @return Response
      */
@@ -72,8 +72,10 @@ class NotesController extends AbstractController
       EntityManagerInterface $entityManager
     ): Response {
         $word = $request->get('word');
+
         $repository = $this->getDoctrine()->getRepository(Notes::class);
-        $records = $repository->findByMsgField($word);
+        $records = $repository->findByField($word);
+
         return $this->render(
           'search.html.twig',
           [
@@ -92,32 +94,10 @@ class NotesController extends AbstractController
     }
 
     /**
-     * @Route("/add", name="add", methods="POST")
-     * @param \Symfony\Component\HttpFoundation\Request $request
-     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
-     *
-     * @return \Symfony\Component\HttpFoundation\RedirectResponse
-     */
-    public function create(
-      Request $request,
-      EntityManagerInterface $entityManager
-    ) {
-        if(empty($request->get('title')) OR empty($request->get('msg'))) {
-            return $this->redirectToRoute('main');
-        }
-        $record = new Notes();
-        $record->setTitle($request->get('title'))
-          ->setMsg($request->get('msg'))
-          ->setTimestamp(new DateTime("now"));
-        $entityManager->persist($record);
-        $entityManager->flush();
-
-        return $this->redirectToRoute('main');
-    }
-
-    /**
      * @Route("/edit/{id}", name="edit")
      * @param int $id
+     *
+     * @return \Symfony\Component\HttpFoundation\Response
      */
     public function edit(int $id)
     {
@@ -133,6 +113,30 @@ class NotesController extends AbstractController
     }
 
     /**
+     * @Route("/add", name="add", methods="POST")
+     * @param \Symfony\Component\HttpFoundation\Request $request
+     * @param \Doctrine\ORM\EntityManagerInterface $entityManager
+     *
+     * @return \Symfony\Component\HttpFoundation\RedirectResponse
+     */
+    public function create(
+      Request $request,
+      EntityManagerInterface $entityManager
+    ) {
+        if (empty($request->get('title')) or empty($request->get('msg'))) {
+            return $this->redirectToRoute('main');
+        }
+        $record = new Notes();
+        $record->setTitle($request->get('title'))
+          ->setMsg($request->get('msg'))
+          ->setTimestamp(new DateTime("now"));
+        $entityManager->persist($record);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('main');
+    }
+
+    /**
      * @Route("/update/{id}", name="update", methods="POST")
      * @param $id
      * @param \Symfony\Component\HttpFoundation\Request $request
@@ -145,6 +149,10 @@ class NotesController extends AbstractController
       Request $request,
       EntityManagerInterface $entityManager
     ) {
+        if (empty($request->get('title')) or empty($request->get('msg'))) {
+            return $this->redirectToRoute('main');
+        }
+
         $entityManager = $this->getDoctrine()->getManager();
         $record = $entityManager->getRepository(Notes::class)->find($id);
         if (!$record) {

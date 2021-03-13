@@ -21,7 +21,15 @@
         </div>
         {% if word %}
             <hr>
-            {% include 'records.html.twig' with {records} %}
+            {% for record in records %}
+                <p>
+                    <b class="text-primary">{{ record.title }}</b>
+                    <span class="text-secondary">(#{{ record.id }} | {{ record.timestamp|date('Y.m.d H:i:s') }})</span>
+                    <br>
+                    <b>{{ record.msg }}</b>
+                </p>
+                <hr>
+            {% endfor %}
         {% endif %}
     </div>
 {% endblock body %}

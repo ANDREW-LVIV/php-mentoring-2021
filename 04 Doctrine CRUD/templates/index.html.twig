@@ -18,7 +18,56 @@
             </div>
         </div>
         <hr>
-        {% include 'records.html.twig' with {records} %}
+
+        {% set sort = '?order=' ~ (order == 'ASC' ? 'DESC' : 'ASC') %}
+        {% set order = '?order=' ~ order %}
+
+        Sort by Title: <a href="{{ sort }}">ASC/DESC</a>
+        <hr>
+        {% for record in records %}
+            <p>
+                <b class="text-primary">{{ record.title }}</b>
+                <span class="text-secondary">(#{{ record.id }} | {{ record.timestamp|date('Y.m.d H:i:s') }})</span>
+                <br>
+                <b>{{ record.msg }}</b>
+                <br>
+                <a href="/edit/{{ record.id }}">EDIT</a> | <a href="/delete/{{ record.id }}">DELETE</a>
+            </p>
+            <hr>
+        {% endfor %}
+
+        <nav aria-label="pagination">
+            <ul class="pagination">
+
+                {% if previous_page %}
+                    <li class="page-item">
+                        <a class="page-link" href="/{{ previous_page }}{{ order }}">Previous</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Previous</span>
+                    </li>
+                {% endif %}
+
+                <li class="page-item disabled">
+          <span class="page-link">
+            {{ page }}
+          </span>
+                </li>
+
+                {% if next_page %}
+                    <li class="page-item">
+                        <a class="page-link" href="/{{ next_page }}{{ order }}">Next</a>
+                    </li>
+                {% else %}
+                    <li class="page-item disabled">
+                        <span class="page-link">Next</span>
+                    </li>
+                {% endif %}
+
+            </ul>
+        </nav>
+
     </div>
 
 {% endblock body %}

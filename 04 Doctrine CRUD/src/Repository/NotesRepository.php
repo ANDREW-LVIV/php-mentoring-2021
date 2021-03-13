@@ -23,12 +23,12 @@ class NotesRepository extends ServiceEntityRepository
     // /**
     //  * @return Notes[] Returns an array of Notes objects
     //  */
-    public function findByMsgField($value)
+    public function findByField($value)
     {
         return $this->createQueryBuilder('g')
-          ->andWhere('g.msg LIKE :val')
+          ->andWhere('g.title LIKE :val')
           ->setParameter('val', '%' . $value . '%')
-          ->orderBy('g.id', 'ASC')
+          ->orderBy('g.id', 'DESC')
           ->getQuery()
           ->getResult();
     }
