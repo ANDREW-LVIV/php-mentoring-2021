@@ -15,30 +15,30 @@
 function planeSeat($a) {
     preg_match("#(\d*)(.*)#", $a, $matches);
 
-    $value_1 = $matches[1] ?: '-';
-    $value_2 = $matches[2] ?: '-';
+    $number = $matches[1] ?: '-';
+    $letter = $matches[2] ?: '-';
 
-    if (1 <= $value_1 && $value_1 <= 20) {
-        $part_1 = 'Front';
-    } elseif (21 <= $value_1 && $value_1 <= 40) {
-        $part_1 = 'Middle';
-    } elseif (41 <= $value_1 && $value_1 <= 60) {
-        $part_1 = 'Back';
+    if (1 <= $number && $number <= 20) {
+        $row = 'Front';
+    } elseif (21 <= $number && $number <= 40) {
+        $row = 'Middle';
+    } elseif (41 <= $number && $number <= 60) {
+        $row = 'Back';
     } else {
-        $part_1 = false;
+        $row = false;
     }
 
-    if (strpos('ABC', $value_2) !== false) {
-        $part_2 = 'Left';
-    } elseif (strpos('DEF', $value_2) !== false) {
-        $part_2 = 'Middle';
-    } elseif (strpos('GHK', $value_2) !== false) {
-        $part_2 = 'Right';
+    if (strpos('ABC', $letter) !== false) {
+        $seat = 'Left';
+    } elseif (strpos('DEF', $letter) !== false) {
+        $seat = 'Middle';
+    } elseif (strpos('GHK', $letter) !== false) {
+        $seat = 'Right';
     } else {
-        $part_2 = false;
+        $seat = false;
     }
 
-    return $part_1 && $part_2 ? "$part_1-$part_2" : "No Seat!!";
+    return $row && $seat ? "$row-$seat" : "No Seat!!";
 }
 
 echo planeSeat("222D") . "\r\n"; // No Seat!!
