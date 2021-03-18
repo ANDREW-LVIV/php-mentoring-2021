@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta name="description" content="">
+        <meta name="author" content="">
+
+        <title>{% block title %}{% endblock %} | Notes</title>
+
+        <link rel="stylesheet"
+              href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"
+              integrity="sha384-JcKb8q3iqJ61gNV9KGb8thSsNjpSL0n8PARn9HuZOnIxN0hoP+VmmDGMN5t9UJ0Z"
+              crossorigin="anonymous">
+            <link rel="stylesheet" href="{{ asset('css/style.css') }}" />
+        {% block stylesheets %}{% endblock %}
+    </head>
+
+    <body class="bg-dark text-light">
+
+        <header class="bg-info">
+            <nav class="container navbar navbar-expand-sm navbar-dark">
+                <a class="navbar-brand" href="{{ path('main') }}"><img src="/img/gb-logo.png" height="32"></a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavAltMarkup"
+                        aria-controls="navbarNavAltMarkup" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+                    <div class="navbar-nav ml-auto">
+                        <a class="nav-item nav-link active" href="{{ path('main') }}">Home <span class="sr-only">(current)</span></a>
+                        <a class="nav-item nav-link" href="{{ path('search_page') }}">Search</a>
+                        <a class="nav-item nav-link" href="{{ path('task') }}">Task</a>
+                    </div>
+                </div>
+            </nav>
+        </header>
+
+        <main role="main" class="container-xl main my-1 py-2">
+            {% block body %}{% endblock %}
+        </main>
+
+        {% block javascripts %}{% endblock %}
+        <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"
+                integrity="sha384-DfXdz2htPH0lsSSs5nCTpuj/zy4C+OGpamoFVy38MVBnE+IbbVYUew+OrCXaRkfj"
+                crossorigin="anonymous">   
+        </script>
+        <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"
+                integrity="sha384-B4gt1jrGC7Jh4AgTPSdUtOBvfO8shuf57BaghqFfPlYxofvL8/KUEfYiJOMMV+rV"
+                crossorigin="anonymous">
+        </script>
+    </body>
+</html>
