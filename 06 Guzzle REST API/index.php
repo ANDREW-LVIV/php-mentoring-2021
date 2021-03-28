@@ -2,14 +2,24 @@
 
 header('Content-Type: text/html; charset=utf-8');
 require_once("APIClient.php");
+require_once('Cache.php');
 
 $act = $_GET['act'] ?: NULL;
 $breed_id = $_GET['breed_id'] ?: NULL;
 
 $client = new APIClient();
-$breeds = json_decode($client->getBreeds()->getBody(), true);
+$cache = new Cache();
+$cacheKey = 'cat' . $act . $breed_id;
 
-$breed_by_name = $breed_id ? json_decode($client->getBreedByName($breed_id)->getBody(), true) : '';
+if(!$act){
+  $cache_lifetime = 5;
+  $breeds = $cache->getCache($cacheKey, $cache_lifetime) ?? $cache->setCache($cacheKey, $client->getBreeds()->getBody(), $cache_lifetime);
+  $breeds = json_decode($breeds, true);
+} elseif ($act == 'show_breed' && $breed_id) {
+  $cache_lifetime = 0;
+  $breed_by_name = $cache->getCache($cacheKey, $cache_lifetime) ?? $cache->setCache($cacheKey, $client->getBreedByName($breed_id)->getBody(), $cache_lifetime);
+  $breed_by_name = json_decode($breed_by_name, true);
+}
 
 ?>
 
