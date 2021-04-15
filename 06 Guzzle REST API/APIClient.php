@@ -11,8 +11,6 @@ use Monolog\Handler\StreamHandler;
 class APIClient {
 
   private $client;
-  public $logger;
-  public $stack;
   const API_URL = 'https://api.thecatapi.com/v1/';
   const API_HEADERS =  [
     'Accept' => 'application/json',
@@ -20,12 +18,12 @@ class APIClient {
   ];
 
   public function __construct() {
-    $this->logger = new Logger('Logger');
-    $this->logger->pushHandler(new StreamHandler(__DIR__ . '/logs.log', Logger::DEBUG));
-    $this->stack = HandlerStack::create();
-    $this->stack->push(
+    $logger = new Logger('Logger');
+    $logger->pushHandler(new StreamHandler(__DIR__ . '/logs.log', Logger::DEBUG));
+    $stack = HandlerStack::create();
+    $stack->push(
       Middleware::log(
-        $this->logger,
+        $logger,
         new MessageFormatter('{uri} - {res_body}')
       )
     );
@@ -34,7 +32,7 @@ class APIClient {
       [
         'base_uri' => self::API_URL,
         'timeout' => 2.0,
-        'handler' => $this->stack
+        'handler' => $stack
       ]
     );
   }
