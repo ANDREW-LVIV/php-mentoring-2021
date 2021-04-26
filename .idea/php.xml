@@ -68,5 +68,5 @@
       <path value="$PROJECT_DIR$/04 Doctrine CRUD/vendor/symfony/validator" />
     </include_path>
   </component>
-  <component name="PhpProjectSharedConfiguration" php_language_level="7.1" />
+  <component name="PhpProjectSharedConfiguration" php_language_level="7.2" />
 </project>
