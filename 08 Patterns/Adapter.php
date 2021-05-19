@@ -60,5 +60,5 @@ echo $adaptee->pop();
 echo '<br>';
 
 $adapter = new Adapter($adaptee);
-$adapter->push('abc');
+$adapter->push('a');
 echo $adapter->pop();
